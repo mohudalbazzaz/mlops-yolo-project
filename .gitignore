@@ -1,3 +1,6 @@
 .venv
 .env
 mlflow.db
+__pycache__/
+.cache.sqlite/
+.pytest_cache/
