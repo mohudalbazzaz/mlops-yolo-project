@@ -1,9 +1,7 @@
-import tensorflow as tf
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from tensorflow.keras import layers, models
 import numpy as np
-import matplotlib.pyplot as plt
 
 def split_data(image_classifications):
 
@@ -20,7 +18,7 @@ def split_data(image_classifications):
         X.extend(images)
         y.extend(len(images) * [classification])
 
-    X = np.array(X) # returns shape (280, 128, 128, 3)
+    X = np.array(X) # returns shape (280 (num images), 128, 128, 3)
 
     # train = 0.7, val = 0.15, test = 0.15
     X_train, X_temp, y_train, y_temp = train_test_split(

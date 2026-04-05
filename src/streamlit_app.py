@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
 
-st.title("Banana Ripeness Classifier 🍌")
+st.title("Banana Ripeness Classifier")
 
 uploaded_file = st.file_uploader("Upload an image", type=["jpg", "jpeg", "png"])
 
