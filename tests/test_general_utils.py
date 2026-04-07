@@ -2,7 +2,7 @@ import io
 import numpy as np
 from PIL import Image
 
-from src.general_utils import preprocess_image
+from src.backend.general_utils import preprocess_image
 
 def test_preprocess_image_output_shape_and_range():
     img = Image.fromarray(

@@ -1,7 +1,7 @@
 import numpy as np
 from tensorflow.keras import models
 
-from src.model_utils import split_data, train_and_validate_model
+from src.backend.model_utils import split_data, train_and_validate_model
 
 def test_split_data_shapes_and_labels():
     fake_images = {

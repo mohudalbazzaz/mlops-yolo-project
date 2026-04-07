@@ -1,0 +1,20 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: src/backend/Dockerfile
+    volumes:
+      - ./banana_model.keras:/app/banana_model.keras
+     # the backend container doesn't interact with the host 
+     # server so only needs communication with the frontend container
+    expose:
+      - "8000"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: src/frontend/Dockerfile
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend

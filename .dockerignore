@@ -1,0 +1,12 @@
+src/hyperparameter_tuning
+src/model_monitoring
+__pycache__/
+.env
+tests/
+.venv
+.github
+.git
+.gitignore
+compose.yml
+mlflow.db
+banana_model.keras

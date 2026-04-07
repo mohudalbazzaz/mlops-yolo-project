@@ -1,9 +1,9 @@
 import os
 import numpy as np
-from supabase import create_client
 from dotenv import load_dotenv
+from supabase import create_client
 
-from src.general_utils import preprocess_image
+from src.backend.general_utils import preprocess_image
 
 load_dotenv()
 

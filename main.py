@@ -1,12 +1,17 @@
 from fastapi import FastAPI, File, UploadFile
+from fastapi.responses import JSONResponse
 import numpy as np
 
-from src.general_utils import preprocess_image, compute_cumulative_ripening
-from src.train_model import load_model
+from src.backend.general_utils import preprocess_image, compute_cumulative_ripening
+from src.backend.train_model import load_model
 
 model = load_model()
 
 app = FastAPI()
+
+@app.get("/health")
+async def health_check():
+    return JSONResponse(content={"status": "healthy"}, status_code=200)
 
 @app.post("/banana_ripeness_classifier")
 async def banana_ripeness_classifier(file: UploadFile = File(...)):

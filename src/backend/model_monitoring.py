@@ -2,8 +2,8 @@ import numpy as np
 import mlflow
 import os
 
-from src.train_model import load_model
-from src.supabase import extract_imgs_from_db
+from src.backend.train_model import load_model
+from src.backend.supabase import extract_imgs_from_db
 
 testing_bucket = os.environ.get("TESTING_BUCKET")
 

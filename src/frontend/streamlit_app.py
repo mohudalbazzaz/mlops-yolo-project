@@ -18,7 +18,7 @@ if uploaded_file is not None:
         }
 
         response = requests.post(
-            "http://127.0.0.1:8000/banana_ripeness_classifier",
+            "http://backend:8000/banana_ripeness_classifier",
             files=files
         )
 

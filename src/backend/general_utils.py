@@ -2,7 +2,7 @@ from PIL import Image
 import numpy as np
 import io
 
-from src.weather_api import get_weekly_temperature_df
+from src.backend.weather_api import get_weekly_temperature_df
 
 def preprocess_image(file_bytes):
 

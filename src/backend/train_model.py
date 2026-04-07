@@ -1,8 +1,8 @@
 import tensorflow as tf
 import os
 
-from src.model_utils import split_data, train_and_validate_model
-from src.supabase import extract_imgs_from_db
+from src.backend.model_utils import split_data, train_and_validate_model
+from src.backend.supabase import extract_imgs_from_db
 
 main_bucket = os.environ.get("MAIN_BUCKET")
 
