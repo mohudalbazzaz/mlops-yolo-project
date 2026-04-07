@@ -9,3 +9,6 @@ mlflow:
 
 compose:
 	docker compose up --build
+
+pytest:
+	python -m pytest
