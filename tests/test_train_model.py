@@ -15,7 +15,7 @@ def test_save_model(monkeypatch):
             self.saved_path = path
 
     dummy_model = DummyModel()
-    monkeypatch.setattr("src.backend.train_model.train_and_validate_model", lambda *args: (None, dummy_model))
+    monkeypatch.setattr("src.backend.train_model.train_and_validate_model", lambda *args: (None, dummy_model, None))
 
     save_model()
 

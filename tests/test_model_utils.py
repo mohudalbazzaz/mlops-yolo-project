@@ -34,7 +34,7 @@ def test_train_and_validate_model():
     X_test = np.random.rand(2, 128, 128, 3)
     y_test = np.array([0, 2])
 
-    metrics, model = train_and_validate_model(X_train, y_train, X_val, y_val, X_test, y_test, batch_size=2)
+    metrics, model, _ = train_and_validate_model(X_train, y_train, X_val, y_val, X_test, y_test, batch_size=2)
 
     assert isinstance(model, models.Sequential)
     assert metrics.history['loss']

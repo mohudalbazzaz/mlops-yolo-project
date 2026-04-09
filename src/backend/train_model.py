@@ -14,7 +14,7 @@ def save_model() -> None:
 
     X_train, y_train, X_val, y_val, X_test, y_test = split_data(images)
 
-    _, model = train_and_validate_model(X_train, y_train, X_val, y_val, X_test, y_test)
+    _, model, _ = train_and_validate_model(X_train, y_train, X_val, y_val, X_test, y_test)
 
     model.save(MODEL_NAME)
 

@@ -52,7 +52,7 @@ def batch_size_tuning() -> None:
     plt.figure(figsize=(10, 6))
 
     for batch_size in (8, 16, 32, 64): 
-        metrics = train_and_validate_model(X_train, y_train, X_val, y_val, X_test, y_test, batch_size)
+        metrics, _, _ = train_and_validate_model(X_train, y_train, X_val, y_val, X_test, y_test, batch_size)
 
         validation_losses = metrics.history['val_loss']
 
@@ -80,7 +80,7 @@ def learning_rate_tuning() -> None:
 
     for learning_rate in (0.001, 0.005, 0.0001, 0.01): 
         adam = tf.keras.optimizers.Adam(learning_rate=learning_rate)
-        metrics = train_and_validate_model(X_train, y_train, X_val, y_val, X_test, y_test, 32, adam)
+        metrics, _, _ = train_and_validate_model(X_train, y_train, X_val, y_val, X_test, y_test, 32, adam)
 
         validation_losses = metrics.history['val_loss']
 
