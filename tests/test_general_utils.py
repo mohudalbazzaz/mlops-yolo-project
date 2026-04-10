@@ -4,10 +4,9 @@ from PIL import Image
 
 from src.backend.general_utils import preprocess_image
 
+
 def test_preprocess_image_output_shape_and_range():
-    img = Image.fromarray(
-        np.random.randint(0, 256, (200, 200, 3), dtype=np.uint8)
-    )
+    img = Image.fromarray(np.random.randint(0, 256, (200, 200, 3), dtype=np.uint8))
 
     img_bytes = io.BytesIO()
     img.save(img_bytes, format="JPEG")

@@ -5,6 +5,7 @@ from typing import Literal
 
 from src.backend.weather_api import get_weekly_temperature_df
 
+
 def preprocess_image(file_bytes: bytes) -> np.ndarray:
     """
     Loads raw image bytes, converts the image to RGB,
@@ -23,11 +24,13 @@ def preprocess_image(file_bytes: bytes) -> np.ndarray:
     # normalising images for nn
     img = img.convert("RGB")
     img = img.resize((128, 128))
-    # scaling pixels to avoid exploding/vanishing gradients 
-    return np.array(img) / 255.0 # each pixel becomes a list of 3 numbers [R, G, B]
+    # scaling pixels to avoid exploding/vanishing gradients
+    return np.array(img) / 255.0  # each pixel becomes a list of 3 numbers [R, G, B]
 
 
-def compute_cumulative_ripening(initial_classification: Literal["Unripe", "Ripe", "Overripe"]) -> str:
+def compute_cumulative_ripening(
+    initial_classification: Literal["Unripe", "Ripe", "Overripe"],
+) -> str:
     """
     Estimate ripening or expiry time based on temperature-dependent function.
 
@@ -46,13 +49,15 @@ def compute_cumulative_ripening(initial_classification: Literal["Unripe", "Ripe"
     T_ref = 20
     Q10 = 2
     cum_ripeness = 0
-    days = 0 
+    days = 0
 
     while True:
 
         df = get_weekly_temperature_df()
 
-        T_day = df.loc[days, "temperature_2m_max"] + 3 # assuming a kitchen is 3 degrees warmer than the outside
+        T_day = (
+            df.loc[days, "temperature_2m_max"] + 3
+        )  # assuming a kitchen is 3 degrees warmer than the outside
 
         per_day_ripening = k_ref * (Q10 ** ((T_day - T_ref) / 10))
 
@@ -60,10 +65,10 @@ def compute_cumulative_ripening(initial_classification: Literal["Unripe", "Ripe"
         days += 1
 
         if initial_classification == "Unripe" and cum_ripeness >= 1:
-            return f'{days} days until ripeness'
-        
+            return f"{days} days until ripeness"
+
         if initial_classification == "Overripe":
-            return f'Past expiration'
-        
+            return f"Past expiration"
+
         if initial_classification == "Ripe" and cum_ripeness >= 1:
-            return f'{days} days until expiry'        
+            return f"{days} days until expiry"

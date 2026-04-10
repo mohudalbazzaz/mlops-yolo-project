@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 
+
 def run_ui() -> None:
     """
     Renders a simple Streamlit UI that allows users to upload an
@@ -22,12 +23,15 @@ def run_ui() -> None:
         if st.button("Predict"):
 
             files = {
-                "file": (uploaded_file.name, uploaded_file.getvalue(), uploaded_file.type)
+                "file": (
+                    uploaded_file.name,
+                    uploaded_file.getvalue(),
+                    uploaded_file.type,
+                )
             }
 
             response = requests.post(
-                "http://backend:8000/banana_ripeness_classifier",
-                files=files
+                "http://backend:8000/banana_ripeness_classifier", files=files
             )
 
             if response.status_code == 200:
@@ -35,6 +39,7 @@ def run_ui() -> None:
                 st.success(f"{result}")
             else:
                 st.error("Error calling API")
+
 
 if __name__ == "__main__":
     run_ui()

@@ -4,6 +4,7 @@ from main import app
 
 client = TestClient(app)
 
+
 def test_banana_ripeness_classifier(monkeypatch):
 
     def fake_preprocess_image(_):
@@ -25,7 +26,7 @@ def test_banana_ripeness_classifier(monkeypatch):
 
     response = client.post(
         "/banana_ripeness_classifier",
-        files={"file": ("test.jpg", b"fake_bytes", "image/jpeg")}
+        files={"file": ("test.jpg", b"fake_bytes", "image/jpeg")},
     )
 
     assert response.status_code == 200

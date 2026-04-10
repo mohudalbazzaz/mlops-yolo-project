@@ -10,18 +10,19 @@ from src.backend.supabase import extract_imgs_from_db
 
 main_bucket = os.environ.get("MAIN_BUCKET")
 
+
 def minimise_validation_loss(metrics: History) -> None:
     """
     Plot training and validation loss across epochs.
 
-    Extracts the training and validation loss values 
+    Extracts the training and validation loss values
     visualises them over the full training period.
 
     Args:
         metrics: A Keras History object containing recorded loss values
     """
-    validation_losses = metrics.history['val_loss']
-    training_losses = metrics.history['loss']
+    validation_losses = metrics.history["val_loss"]
+    training_losses = metrics.history["loss"]
 
     num_epochs = len(validation_losses)
     x = np.arange(1, num_epochs + 1, 1)
@@ -40,6 +41,7 @@ def minimise_validation_loss(metrics: History) -> None:
 
     plt.show()
 
+
 def batch_size_tuning() -> None:
     """Compare validation loss curves for multiple batch sizes."""
 
@@ -51,12 +53,14 @@ def batch_size_tuning() -> None:
 
     plt.figure(figsize=(10, 6))
 
-    for batch_size in (8, 16, 32, 64): 
-        metrics, _, _ = train_and_validate_model(X_train, y_train, X_val, y_val, X_test, y_test, batch_size)
+    for batch_size in (8, 16, 32, 64):
+        metrics, _, _ = train_and_validate_model(
+            X_train, y_train, X_val, y_val, X_test, y_test, batch_size
+        )
 
-        validation_losses = metrics.history['val_loss']
+        validation_losses = metrics.history["val_loss"]
 
-        plt.plot(x, validation_losses, label=f'batch size {batch_size}')
+        plt.plot(x, validation_losses, label=f"batch size {batch_size}")
 
     plt.xticks(x)
 
@@ -67,9 +71,10 @@ def batch_size_tuning() -> None:
 
     plt.show()
 
+
 def learning_rate_tuning() -> None:
     """Compare validation loss curves for multiple learning rates."""
-    
+
     images = extract_imgs_from_db(main_bucket)
 
     X_train, y_train, X_val, y_val, X_test, y_test = split_data(images)
@@ -78,13 +83,15 @@ def learning_rate_tuning() -> None:
 
     plt.figure(figsize=(10, 6))
 
-    for learning_rate in (0.001, 0.005, 0.0001, 0.01): 
+    for learning_rate in (0.001, 0.005, 0.0001, 0.01):
         adam = tf.keras.optimizers.Adam(learning_rate=learning_rate)
-        metrics, _, _ = train_and_validate_model(X_train, y_train, X_val, y_val, X_test, y_test, 32, adam)
+        metrics, _, _ = train_and_validate_model(
+            X_train, y_train, X_val, y_val, X_test, y_test, 32, adam
+        )
 
-        validation_losses = metrics.history['val_loss']
+        validation_losses = metrics.history["val_loss"]
 
-        plt.plot(x, validation_losses, label=f'learning rate {learning_rate}')
+        plt.plot(x, validation_losses, label=f"learning rate {learning_rate}")
 
     plt.xticks(x)
 
@@ -95,6 +102,6 @@ def learning_rate_tuning() -> None:
 
     plt.show()
 
+
 if __name__ == "__main__":
     learning_rate_tuning()
-

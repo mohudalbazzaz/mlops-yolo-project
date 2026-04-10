@@ -9,10 +9,11 @@ testing_bucket = os.environ.get("TESTING_BUCKET")
 
 model = load_model()
 
+
 def monitor_model() -> None:
     """
-    Loads labelled test images from a storage bucket, performs inference 
-    using a pre-loaded model, and logs each prediction to MLflow. 
+    Loads labelled test images from a storage bucket, performs inference
+    using a pre-loaded model, and logs each prediction to MLflow.
     """
     image_classifications = extract_imgs_from_db(testing_bucket)
 
@@ -23,9 +24,9 @@ def monitor_model() -> None:
 
         X.extend(images)
         y.extend(len(images) * [classification])
-        
+
     for img, true_label in zip(X, y):
-            
+
         img = np.expand_dims(img, axis=0)
 
         prediction_probs = model.predict(img)
@@ -35,9 +36,8 @@ def monitor_model() -> None:
         predicted_class = class_names[np.argmax(prediction_probs)]
 
         mlflow.set_experiment("Banana monitoring")
-        
+
         with mlflow.start_run(nested=True):
             mlflow.log_param("true_label", true_label)
             mlflow.log_param("predicted_class", predicted_class)
             mlflow.log_metric("correct", int(predicted_class == true_label))
-        

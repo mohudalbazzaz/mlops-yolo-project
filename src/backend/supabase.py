@@ -11,7 +11,8 @@ url = os.environ.get("SUPABASE_URL")
 key = os.environ.get("SUPABASE_KEY")
 main_bucket = os.environ.get("MAIN_BUCKET")
 
-#TODO DEAL WITH THIS
+
+# TODO DEAL WITH THIS
 def extract_imgs_from_db(bucket_name):
 
     supabase = create_client(url, key)
@@ -28,8 +29,7 @@ def extract_imgs_from_db(bucket_name):
 
         while True:
             batch = supabase.storage.from_(bucket_name).list(
-                folder_name,
-                {"limit": limit, "offset": offset}
+                folder_name, {"limit": limit, "offset": offset}
             )
 
             if not batch:

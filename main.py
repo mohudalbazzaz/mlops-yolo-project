@@ -9,9 +9,11 @@ model = load_model()
 
 app = FastAPI()
 
+
 @app.get("/health")
 async def health_check():
     return JSONResponse(content={"status": "healthy"}, status_code=200)
+
 
 @app.post("/banana_ripeness_classifier")
 async def banana_ripeness_classifier(file: UploadFile = File(...)) -> str:
@@ -34,7 +36,7 @@ async def banana_ripeness_classifier(file: UploadFile = File(...)) -> str:
     image = await file.read()
 
     img = preprocess_image(image)
-    
+
     img = np.expand_dims(img, axis=0)  # shape becomes (1, 128, 128, 3)
 
     prediction = model.predict(img)
@@ -46,20 +48,3 @@ async def banana_ripeness_classifier(file: UploadFile = File(...)) -> str:
     classification = compute_cumulative_ripening(predicted_class)
 
     return classification
-
-
-
-
-
-
-
-
-
-    
-
-
-
-    
-
-
-
