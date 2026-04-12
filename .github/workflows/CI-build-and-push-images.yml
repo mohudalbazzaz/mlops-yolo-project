@@ -19,7 +19,7 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: ACR Login
-      run: az acr login --bananacnnproject
+      run: az acr login --name bananacnnproject
 
     - uses: actions/checkout@v4
     - name: Build the Docker images
