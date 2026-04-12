@@ -16,7 +16,7 @@ async def health_check():
 
 
 @app.post("/banana_ripeness_classifier")
-async def banana_ripeness_classifier(file: UploadFile = File(...)) -> str:
+async def banana_ripeness_classifier(file: UploadFile = File(...)):
     """Classify banana ripeness from an uploaded image and estimate ripening time.
 
     This endpoint accepts an image upload, preprocesses it for the model,
@@ -33,18 +33,20 @@ async def banana_ripeness_classifier(file: UploadFile = File(...)) -> str:
         - days until expiry (if predicted ripe),
         - or expiration status (if predicted overripe).
     """
-    image = await file.read()
+    try:
+        image = await file.read()
 
-    img = preprocess_image(image)
+        img = preprocess_image(image)
+        img = np.expand_dims(img, axis=0)
 
-    img = np.expand_dims(img, axis=0)  # shape becomes (1, 128, 128, 3)
+        prediction = model.predict(img)
 
-    prediction = model.predict(img)
+        class_names = ["Overripe", "Ripe", "Unripe"]
+        predicted_class = class_names[np.argmax(prediction)]
 
-    class_names = ["Overripe", "Ripe", "Unripe"]
+        classification = compute_cumulative_ripening(predicted_class)
 
-    predicted_class = class_names[np.argmax(prediction)]
+        return {"result": classification}
 
-    classification = compute_cumulative_ripening(predicted_class)
-
-    return classification
+    except Exception as e:
+        return {"error": str(e)}

@@ -9,4 +9,3 @@ tests/
 .gitignore
 compose.yml
 mlflow.db
-banana_model.keras

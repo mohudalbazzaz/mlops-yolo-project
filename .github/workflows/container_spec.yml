@@ -1,0 +1,35 @@
+apiVersion: 2019-12-01
+location: uksouth
+name: banana-app
+properties:
+  osType: Linux
+
+  containers:
+    - name: backend
+      properties:
+        image: bananacnnproject.azurecr.io/backend
+        resources:
+          requests:
+            cpu: 1
+            memoryInGb: 1.5
+        ports:
+          - port: 8000
+
+    - name: frontend
+      properties:
+        image: bananacnnproject.azurecr.io/frontend
+        resources:
+          requests:
+            cpu: 1
+            memoryInGb: 1.5
+        ports:
+          - port: 8501
+        environmentVariables:
+          - name: BACKEND_URL
+            value: "http://localhost:8000"
+
+  ipAddress:
+    type: Public
+    ports:
+      - protocol: tcp
+        port: 8501

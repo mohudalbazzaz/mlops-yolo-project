@@ -1,20 +1,20 @@
-# STAGE 1 - BUILDER
-FROM python:3.13-slim as BUILDER
+# STAGE 1
+FROM python:3.13-slim as builder
 WORKDIR /app
 
-COPY requirements.txt .
-# the --user flag tells pip to install all packages in /root/.local to copy over
-RUN pip install --user --no-cache-dir -r requirements.txt 
+RUN python -m venv /venv
+ENV PATH="/venv/bin:$PATH"
 
-# STAGE 2 - RUNTIME
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# STAGE 2
 FROM python:3.13-slim
 WORKDIR /app
 
-COPY --from=BUILDER /root/.local /root/.local
-COPY . . 
+COPY --from=builder /venv /venv
+ENV PATH="/venv/bin:$PATH"
 
-# installing packages to /root/.local 
-ENV PATH=/root/.local/bin:$PATH
+COPY . .
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
-
+CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

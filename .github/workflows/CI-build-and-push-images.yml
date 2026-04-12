@@ -1,0 +1,34 @@
+name: CI Pipeline - Build Docker Images
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker images
+      run: |
+        # git rev-parse -> resolve commit reference
+        TAG=$(git rev-parse --short HEAD)
+
+        docker buildx build \
+        --platform linux/amd64 \            
+        -f src/backend/Dockerfile \
+        -t bananacnnproject.azurecr.io/backend:$TAG \     
+        --push \         
+        .
+
+        docker buildx build \
+        --platform linux/amd64 \            
+        -f src/frontend/Dockerfile \
+        -t bananacnnproject.azurecr.io/frontend:$TAG \     
+        --push \         
+        .    

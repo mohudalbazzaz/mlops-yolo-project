@@ -1,6 +1,11 @@
 import streamlit as st
 import requests
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
+
+backend_url = os.environ.get("BACKEND_URL")
 
 def run_ui() -> None:
     """
@@ -30,13 +35,12 @@ def run_ui() -> None:
                 )
             }
 
-            response = requests.post(
-                "http://backend:8000/banana_ripeness_classifier", files=files
-            )
+            response = requests.post(backend_url, files=files)
 
             if response.status_code == 200:
                 result = response.json()
-                st.success(f"{result}")
+                prediction = result["result"]
+                st.success(f"{prediction}")
             else:
                 st.error("Error calling API")
 
