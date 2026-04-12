@@ -28,15 +28,15 @@ jobs:
         TAG=$(git rev-parse --short HEAD)
 
         docker buildx build \
-        --platform linux/amd64 \            
+        --platform linux/amd64 \
         -f src/backend/Dockerfile \
-        -t bananacnnproject.azurecr.io/backend:$TAG \     
-        --push \         
+        -t bananacnnproject.azurecr.io/backend:$TAG \
+        --push \
         .
 
         docker buildx build \
-        --platform linux/amd64 \            
+        --platform linux/amd64 \
         -f src/frontend/Dockerfile \
-        -t bananacnnproject.azurecr.io/frontend:$TAG \     
-        --push \         
-        .    
+        -t bananacnnproject.azurecr.io/frontend:$TAG \
+        --push \
+        .
