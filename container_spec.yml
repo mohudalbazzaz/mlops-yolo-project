@@ -4,13 +4,10 @@ name: bananacnnproject
 properties:
   osType: Linux
 
-  identity:
-    type: SystemAssigned
-
   containers:
     - name: backend
       properties:
-        image: mcr.microsoft.com/azuredocs/aci-helloworld
+        image: bananacnnproject.azurecr.io/frontend:backend
         resources:
           requests:
             cpu: 1
@@ -20,7 +17,7 @@ properties:
 
     - name: frontend
       properties:
-        image: mcr.microsoft.com/azuredocs/aci-helloworld
+        image: bananacnnproject.azurecr.io/frontend:frontend
         resources:
           requests:
             cpu: 1
