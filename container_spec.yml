@@ -7,7 +7,7 @@ properties:
   containers:
     - name: backend
       properties:
-        image: bananacnnproject.azurecr.io/frontend:backend
+        image: bananacnnproject.azurecr.io/backend:latest
         resources:
           requests:
             cpu: 1
@@ -17,7 +17,7 @@ properties:
 
     - name: frontend
       properties:
-        image: bananacnnproject.azurecr.io/frontend:frontend
+        image: bananacnnproject.azurecr.io/frontend:latest
         resources:
           requests:
             cpu: 1
