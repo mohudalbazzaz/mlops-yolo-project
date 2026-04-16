@@ -32,4 +32,4 @@ jobs:
           az containerapp update \
             --name frontend \
             --resource-group banana-project-rg \
-            --image bananacnnproject.azurecr.io/frontend:$TAG
+            --image bananacnnproject.azurecr.io\frontend:$TAG
