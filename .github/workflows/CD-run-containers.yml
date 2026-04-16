@@ -23,12 +23,20 @@ jobs:
           echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> $GITHUB_ENV
           echo "CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}" >> $GITHUB_ENV
 
+      - name: Debug injected env vars
+        run: |
+          echo "CLIENT_ID=$CLIENT_ID"
+          echo "CLIENT_SECRET length=${#CLIENT_SECRET}"
+
       - name: Install envsubst
         run: sudo apt-get update && sudo apt-get install -y gettext
 
       - name: Generate resolved container spec
         run: |
           envsubst < container_spec.yml > container_spec_resolved.yml
+
+      - name: Debug resolved spec
+        run: cat container_spec_resolved.yml
 
       - name: Deploy to ACI
         run: |
