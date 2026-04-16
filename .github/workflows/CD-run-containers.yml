@@ -1,9 +1,10 @@
 name: CD Pipeline - Deploy to Container Apps
 
 on:
-  push:
-    branches:
-      - "**"
+  workflow_run: 
+    workflows: ["CI Pipeline - Build Docker Images"] 
+    types:
+    - completed
 
 jobs:
   deploy:
