@@ -19,7 +19,7 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Deploy backend to Container Apps
+      - name: Deploy Containers to Container Apps
         run: |
           TAG=$(git rev-parse --short HEAD)
           az containerapp update \
@@ -27,8 +27,6 @@ jobs:
             --resource-group banana-project-rg \
             --image bananacnnproject.azurecr.io/backend:$TAG
 
-      - name: Deploy frontend to Container Apps
-        run: |
           az containerapp update \
             --name frontend \
             --resource-group banana-project-rg \
