@@ -1,13 +1,12 @@
 import numpy as np
 import mlflow
-import os
 
 from src.backend.train_model import load_model
-from src.backend.supabase import extract_imgs_from_db
-
-testing_bucket = os.environ.get("TESTING_BUCKET")
+from src.backend.blob_storage import extract_imgs_from_db
 
 model = load_model()
+
+BANANA_PRODUCTION_IMAGES = "banana-production-images"
 
 
 def monitor_model() -> None:
@@ -15,7 +14,7 @@ def monitor_model() -> None:
     Loads labelled test images from a storage bucket, performs inference
     using a pre-loaded model, and logs each prediction to MLflow.
     """
-    image_classifications = extract_imgs_from_db(testing_bucket)
+    image_classifications = extract_imgs_from_db(BANANA_PRODUCTION_IMAGES)
 
     X = []
     y = []
@@ -41,3 +40,7 @@ def monitor_model() -> None:
             mlflow.log_param("true_label", true_label)
             mlflow.log_param("predicted_class", predicted_class)
             mlflow.log_metric("correct", int(predicted_class == true_label))
+
+
+if __name__ == "__name__":
+    monitor_model()

@@ -7,6 +7,7 @@ load_dotenv()
 
 backend_url = os.environ.get("BACKEND_URL")
 
+
 def run_ui() -> None:
     """
     Renders a simple Streamlit UI that allows users to upload an
