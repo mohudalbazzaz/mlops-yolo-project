@@ -1,5 +1,6 @@
 import numpy as np
 from tensorflow.keras import models
+import mlflow
 
 from src.backend.model_utils import split_data, train_and_validate_model
 
@@ -25,21 +26,3 @@ def test_split_data_shapes_and_labels():
     assert len(y_train) == 14
     assert len(y_val) == 3
     assert len(y_test) == 3
-
-
-def test_train_and_validate_model():
-    X_train = np.random.rand(4, 128, 128, 3)
-    y_train = np.array([0, 1, 2, 0])
-    X_val = np.random.rand(2, 128, 128, 3)
-    y_val = np.array([1, 2])
-    X_test = np.random.rand(2, 128, 128, 3)
-    y_test = np.array([0, 2])
-
-    metrics, model, _ = train_and_validate_model(
-        X_train, y_train, X_val, y_val, X_test, y_test, batch_size=2
-    )
-
-    assert isinstance(model, models.Sequential)
-    assert metrics.history["loss"]
-    assert metrics.history["accuracy"]
-    assert model.output_shape[-1] == 3

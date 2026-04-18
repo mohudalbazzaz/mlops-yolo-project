@@ -1,14 +1,13 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
-import os
 from keras.callbacks import History
 
 from src.backend.model_utils import train_and_validate_model, split_data
 
-from src.backend.supabase import extract_imgs_from_db
+from src.backend.blob_storage import extract_imgs_from_db
 
-main_bucket = os.environ.get("MAIN_BUCKET")
+BANANA_MODEL_IMAGES = "banana-model-images"
 
 
 def minimise_validation_loss(metrics: History) -> None:
@@ -45,7 +44,7 @@ def minimise_validation_loss(metrics: History) -> None:
 def batch_size_tuning() -> None:
     """Compare validation loss curves for multiple batch sizes."""
 
-    images = extract_imgs_from_db(main_bucket)
+    images = extract_imgs_from_db(BANANA_MODEL_IMAGES)
 
     X_train, y_train, X_val, y_val, X_test, y_test = split_data(images)
 
@@ -75,7 +74,7 @@ def batch_size_tuning() -> None:
 def learning_rate_tuning() -> None:
     """Compare validation loss curves for multiple learning rates."""
 
-    images = extract_imgs_from_db(main_bucket)
+    images = extract_imgs_from_db(BANANA_MODEL_IMAGES)
 
     X_train, y_train, X_val, y_val, X_test, y_test = split_data(images)
 
