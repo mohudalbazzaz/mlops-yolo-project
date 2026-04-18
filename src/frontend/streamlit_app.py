@@ -45,6 +45,7 @@ def run_ui() -> None:
 
                 result = response.json()
                 prediction = result["result"]
+                st.write("BACKEND_URL:", BACKEND_URL)
 
                 st.success(f"{prediction}")
 
